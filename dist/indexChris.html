@@ -37,30 +37,47 @@
             <script>
                 function startQuiz() {
                     const answers = {};
-                
+
                     answers.q1 = prompt("What's your spending style? \nA) YOLO it all \nB) Save every sat \nC) Buy the dip");
                     answers.q2 = prompt("Pick a motto: \nA) To the moon! 🚀 \nB) In decentralization we trust \nC) HODL forever");
                     answers.q3 = prompt("Your ideal investment strategy? \nA) Memes and dreams \nB) Solid and steady \nC) Privacy and power");
-                
+
                     let result = "";
-                
+
                     if (answers.q1?.toUpperCase() === "A" && answers.q2?.toUpperCase() === "A") {
                         result = "dogecoin";
                     } else if (answers.q2?.toUpperCase() === "B") {
                         result = "bitcoin";
                     } else {
-                        result = "monero";
+                        result = "trumpcoin";
                     }
-                
+
+                    const imageMap = {
+                        bitcoin: "https://www.shutterstock.com/image-vector/monalisa-nft-crypto-bitcoin-vector-600nw-2107982492.jpg",
+                        dogecoin: "https://www.shutterstock.com/image-vector/custom-doge-cartoon-mascot-logo-260nw-2466791177.jpg",
+                        trumpcoin: "https://www.shutterstock.com/image-photo/donald-trump-new-meme-coin-260nw-2573556041.jpg"
+                    };
+
                     fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${result}&vs_currencies=usd`)
                         .then(response => response.json())
                         .then(data => {
                             const price = data[result].usd;
-                            alert(`You're ${result.charAt(0).toUpperCase() + result.slice(1)}! Current value: $${price} USD`);
+                            const resultText = `You're <strong>${result.charAt(0).toUpperCase() + result.slice(1)}</strong>! Current value: $${price} USD 🚀`;
+                            document.getElementById("quiz-result").innerHTML = resultText;
+
+                            // Update image source
+                            const cryptoImage = document.getElementById("crypto-image");
+                            if (imageMap[result]) {
+                                cryptoImage.src = imageMap[result];
+                                cryptoImage.alt = `${result} logo`;
+                            }
+
+                            // Scroll to result section
+                            document.getElementById("about").scrollIntoView({ behavior: "smooth" });
                         })
                         .catch(error => {
                             console.error("API error:", error);
-                            alert(`You're ${result.charAt(0).toUpperCase() + result.slice(1)}! (Price data unavailable)`);
+                            document.getElementById("quiz-result").innerHTML = `You're ${result.charAt(0).toUpperCase() + result.slice(1)}! (Price data unavailable 😓)`;
                         });
                 }
             </script>
@@ -70,15 +87,18 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8">
-                        <h2 class="text-white mb-4">Built with Bootstrap 5</h2>
+                        <!-- <h2 class="text-white mb-4">Built with Bootstrap 5</h2>
                         <p class="text-white-50">
                             Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on
                             the preview page.
                             The theme is open source, and you can use it for any purpose, personal or commercial.
-                        </p>
+                        </p> -->
+
+                        <!-- Quiz results -->
+                        <div id="quiz-result" class="mt-4 text-white fs-4"></div>
                     </div>
                 </div>
-                <img class="img-fluid" src="assets/img/ipad.png" alt="..." />
+                <img id="crypto-image" class="img-fluid" src="assets/img/ipad.png" alt="Crypto Image" />
             </div>
         </section>
         <!-- Footer-->
