@@ -29,10 +29,41 @@
                     <div class="text-center">
                         <h1 class="mx-auto my-0 text-uppercase">Crypto Personality</h1>
                         <h2 class="text-white-50 mx-auto mt-2 mb-5">Which cryptocurrency matches your vibe? Take the quiz and find out if you're bold like Bitcoin or just here for the memes like Dogecoin.</h2>
-                        <a class="btn btn-primary" href="#about">Get Started</a>
+                        <a class="btn btn-primary" href="#" onclick="startQuiz()">Get Started</a>
                     </div>
                 </div>
             </div>
+
+            <script>
+                function startQuiz() {
+                    const answers = {};
+                
+                    answers.q1 = prompt("What's your spending style? \nA) YOLO it all \nB) Save every sat \nC) Buy the dip");
+                    answers.q2 = prompt("Pick a motto: \nA) To the moon! 🚀 \nB) In decentralization we trust \nC) HODL forever");
+                    answers.q3 = prompt("Your ideal investment strategy? \nA) Memes and dreams \nB) Solid and steady \nC) Privacy and power");
+                
+                    let result = "";
+                
+                    if (answers.q1?.toUpperCase() === "A" && answers.q2?.toUpperCase() === "A") {
+                        result = "dogecoin";
+                    } else if (answers.q2?.toUpperCase() === "B") {
+                        result = "bitcoin";
+                    } else {
+                        result = "monero";
+                    }
+                
+                    fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${result}&vs_currencies=usd`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const price = data[result].usd;
+                            alert(`You're ${result.charAt(0).toUpperCase() + result.slice(1)}! Current value: $${price} USD`);
+                        })
+                        .catch(error => {
+                            console.error("API error:", error);
+                            alert(`You're ${result.charAt(0).toUpperCase() + result.slice(1)}! (Price data unavailable)`);
+                        });
+                }
+            </script>
         </header>
         <!--Quiz-->
         <section class="about-section text-center" id="about">
