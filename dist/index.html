@@ -1,112 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Crypto4Lyf</title>
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#page-top">What crypto are you?</a>
-            </div>
-        </nav>
-        <!-- Masthead-->
-        <header class="masthead">
-            <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
-                <div class="d-flex justify-content-center">
-                    <div class="text-center">
-                        <h1 class="mx-auto my-0 text-uppercase">Crypto Personality</h1>
-                        <h2 class="text-white-50 mx-auto mt-2 mb-5">Which cryptocurrency matches your vibe? Take the quiz and find out if you're bold like Bitcoin or just here for the memes like Dogecoin.</h2>
-                        <a class="btn btn-primary" href="#" onclick="startQuiz()">Get Started</a>
-                    </div>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Crypto4Lyf</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="css/styles.css" rel="stylesheet" />
+    <style>
+        /* Navbar Styles */
+        .navbar {
+            background-color: white; /* White background by default */
+            color: black; /* Default text color is black */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for both background and text color */
+        }
+
+        .navbar-scrolled {
+            background-color: transparent !important; /* Make navbar background fully transparent */
+            color: white !important; /* Make text color white when scrolled */
+        }
+
+        /* Optionally, for links, make sure the links text color also transitions */
+        .navbar-scrolled .navbar-nav .nav-link {
+            color: white !important; /* Change text color of links when scrolled */
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: black; /* Default text color for links */
+        }
+
+        /* Hover state for navbar links */
+        .navbar-scrolled .navbar-nav .nav-link:hover {
+            color: #f0f0f0; /* Slightly lighter color for hover state when navbar is scrolled */
+        }
+
+        .navbar .navbar-nav .nav-link:hover {
+            color: #333; /* Default hover color for links */
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="#page-top">What crypto are you?</a>
+        </div>
+    </nav>
+
+    <!-- Masthead -->
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">Crypto Personality</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Which cryptocurrency matches your vibe? Take the quiz and find out if you're bold like Bitcoin or just here for the memes like Dogecoin.</h2>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#quizModal">Get Started</button>
                 </div>
             </div>
+        </div>
+    </header>
 
-            <script>
-                function startQuiz() {
-                    const answers = {};
+    <!-- Modal (Quiz Form)-->
+    <div class="modal fade" id="quizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white border-0">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="quizModalLabel">Crypto Personality Quiz</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="quiz-form">
+                        <div class="mb-3">
+                            <label for="q1" class="form-label">What's your spending style?</label>
+                            <select class="form-select bg-dark text-white border-secondary" id="q1" required>
+                                <option value="">Choose...</option>
+                                <option value="A">A) YOLO it all</option>
+                                <option value="B">B) Save every sat</option>
+                                <option value="C">C) Buy the dip</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="q2" class="form-label">Pick a motto:</label>
+                            <select class="form-select bg-dark text-white border-secondary" id="q2" required>
+                                <option value="">Choose...</option>
+                                <option value="A">A) To the moon! 🚀</option>
+                                <option value="B">B) In decentralization we trust</option>
+                                <option value="C">C) HOLD forever</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="q3" class="form-label">Your ideal investment strategy?</label>
+                            <select class="form-select bg-dark text-white border-secondary" id="q3" required>
+                                <option value="">Choose...</option>
+                                <option value="A">A) Memes and dreams</option>
+                                <option value="B">B) Solid and steady</option>
+                                <option value="C">C) Privacy and power</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">See Results</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    answers.q1 = prompt("What's your spending style? \nA) YOLO it all \nB) Save every sat \nC) Buy the dip");
-                    answers.q2 = prompt("Pick a motto: \nA) To the moon! 🚀 \nB) In decentralization we trust \nC) HOLD forever");
-                    answers.q3 = prompt("Your ideal investment strategy? \nA) Memes and dreams \nB) Solid and steady \nC) Privacy and power");
+    <!-- Results Section -->
+    <section class="about-section text-center" id="about">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="text-white mb-4">Crypto your future depends on!</h2>
+                    <p class="text-white-50">
+                        Your crypto personality isn't just a vibe, it's your financial spirit animal guiding your journey through the blockchain of life. 
+                        Choose wrong, and you might end up with TrumpCoin: huge ego, zero utility, and still insisting it's worth more than Bitcoin... many people are saying it.
+                    </p>
+                    <div id="quiz-result" class="mt-4 text-white fs-4"></div>
+                </div>
+            </div>
+            <img id="crypto-image" class="img-fluid mt-3" src="assets/img/ipad.png" alt="Crypto Image" />
+        </div>
+    </section>
 
-                    let result = "";
+    <!-- Footer -->
+    <footer class="footer bg-black small text-center text-white-50">
+        <div class="container px-4 px-lg-5">Copyright &copy; Crypto4Lyf 2025</div>
+    </footer>
 
-                    if (answers.q1?.toUpperCase() === "A" && answers.q2?.toUpperCase() === "A") {
-                        result = "dogecoin";
-                    } else if (answers.q2?.toUpperCase() === "B") {
-                        result = "bitcoin";
-                    } else {
-                        result = "trumpcoin";
+    <!-- Bootstrap core JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="js/scripts.js"></script>
+
+    <!-- Scroll Effect Script -->
+    <script>
+        // Change navbar style on scroll
+        window.onscroll = function () { changeNavbarStyle() };
+
+        function changeNavbarStyle() {
+            const navbar = document.getElementById("mainNav");
+            if (window.scrollY > 50) {
+                navbar.classList.add("navbar-scrolled");
+            } else {
+                navbar.classList.remove("navbar-scrolled");
+            }
+        }
+    </script>
+
+    <!-- Quiz Script -->
+    <script>
+        document.getElementById("quiz-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const answers = {
+                q1: document.getElementById("q1").value,
+                q2: document.getElementById("q2").value,
+                q3: document.getElementById("q3").value
+            };
+
+            let result = "";
+
+            if (answers.q1 === "A" && answers.q2 === "A") {
+                result = "dogecoin";
+            } else if (answers.q2 === "B") {
+                result = "bitcoin";
+            } else {
+                result = "trumpcoin";
+            }
+
+            const imageMap = {
+                bitcoin: "https://www.shutterstock.com/image-vector/monalisa-nft-crypto-bitcoin-vector-600nw-2107982492.jpg",
+                dogecoin: "https://www.shutterstock.com/image-vector/custom-doge-cartoon-mascot-logo-260nw-2466791177.jpg",
+                trumpcoin: "https://www.shutterstock.com/image-photo/donald-trump-new-meme-coin-260nw-2573556041.jpg"
+            };
+
+            fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${result}&vs_currencies=usd`)
+                .then(response => response.json())
+                .then(data => {
+                    const price = data[result]?.usd;
+                    const resultText = `You're <strong>${result.charAt(0).toUpperCase() + result.slice(1)}</strong>! Current value: $${price} USD 🚀`;
+                    document.getElementById("quiz-result").innerHTML = resultText;
+
+                    const cryptoImage = document.getElementById("crypto-image");
+                    if (imageMap[result]) {
+                        cryptoImage.src = imageMap[result];
+                        cryptoImage.alt = `${result} logo`;
                     }
 
-                    const imageMap = {
-                        bitcoin: "https://www.shutterstock.com/image-vector/monalisa-nft-crypto-bitcoin-vector-600nw-2107982492.jpg",
-                        dogecoin: "https://www.shutterstock.com/image-vector/custom-doge-cartoon-mascot-logo-260nw-2466791177.jpg",
-                        trumpcoin: "https://www.shutterstock.com/image-photo/donald-trump-new-meme-coin-260nw-2573556041.jpg"
-                    };
+                    const modal = bootstrap.Modal.getInstance(document.getElementById("quizModal"));
+                    modal.hide();
 
-                    fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${result}&vs_currencies=usd`)
-                        .then(response => response.json())
-                        .then(data => {
-                            const price = data[result].usd;
-                            const resultText = `You're <strong>${result.charAt(0).toUpperCase() + result.slice(1)}</strong>! Current value: $${price} USD 🚀`;
-                            document.getElementById("quiz-result").innerHTML = resultText;
+                    document.getElementById("about").scrollIntoView({ behavior: "smooth" });
+                })
+                .catch(error => {
+                    console.error("API error:", error);
+                    document.getElementById("quiz-result").innerHTML = `You're ${result.charAt(0).toUpperCase() + result.slice(1)}! (Price data unavailable 😓)`;
+                });
+        });
+    </script>
 
-                            // Update image source
-                            const cryptoImage = document.getElementById("crypto-image");
-                            if (imageMap[result]) {
-                                cryptoImage.src = imageMap[result];
-                                cryptoImage.alt = `${result} logo`;
-                            }
+</body>
 
-                            // Scroll to result section
-                            document.getElementById("about").scrollIntoView({ behavior: "smooth" });
-                        })
-                        .catch(error => {
-                            console.error("API error:", error);
-                            document.getElementById("quiz-result").innerHTML = `You're ${result.charAt(0).toUpperCase() + result.slice(1)}! (Price data unavailable 😓)`;
-                        });
-                }
-            </script>
-        </header>
-        <!--Quiz-->
-        <section class="about-section text-center" id="about">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-lg-8">
-                        <h2 class="text-white mb-4">Crypto your future depends on!</h2>
-                        <p class="text-white-50">
-                          Your crypto personality isn't just a vibe, it's your financial spirit animal guiding your journey through the blockchain of life. 
-                          Choose wrong, and you might end up with TrumpCoin: huge ego, zero utility, and still insisting it's worth more than Bitcoin... many people are saying it.
-                        </p> 
-
-                        <!-- Quiz results -->
-                        <div id="quiz-result" class="mt-4 text-white fs-4"></div>
-                    </div>
-                </div>
-                <img id="crypto-image" class="img-fluid" src="assets/img/ipad.png" alt="Crypto Image" />
-            
-            </div>
-        </section>
-        <!-- Footer-->
-        <footer class="footer bg-black small text-center text-white-50"><div class="container px-4 px-lg-5">Copyright &copy; Your Website 2023</div></footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-
-    </body>
 </html>
